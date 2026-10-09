@@ -11,9 +11,9 @@
 
 下面的界面截图来自本地演示模式，使用项目内置的演示项目。
 
-[![CineAI Studio 产品介绍视频预览（75 秒）](docs/media/cineai-studio-product-film-poster.jpg)](docs/media/cineai-studio-product-film.mp4)
+[![CineAI Studio 产品介绍视频预览（75 秒）](docs/media/cineai-studio-product-film-poster.jpg)](https://raw.githubusercontent.com/zneghao777/MyAIGCDemo/main/docs/media/cineai-studio-product-film.mp4)
 
-[播放或下载 75 秒产品视频（1080p，30 fps）](docs/media/cineai-studio-product-film.mp4)
+[下载 75 秒产品视频（H.264/AAC，1080p，30 fps）](https://raw.githubusercontent.com/zneghao777/MyAIGCDemo/main/docs/media/cineai-studio-product-film.mp4)
 
 ### 项目总览
 
