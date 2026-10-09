@@ -7,6 +7,26 @@
 服务端模式的图片、视频、音频与成片保存到 `data/media/`，页面从本地 API 读取。
 仅外部生成接口要求公网素材 URL 时使用七牛临时上传，默认保留 3 天。
 
+## 产品展示
+
+下面的界面截图来自本地演示模式，使用项目内置的演示项目。
+
+[![CineAI Studio 产品介绍视频预览（75 秒）](docs/media/cineai-studio-product-film-poster.jpg)](docs/media/cineai-studio-product-film.mp4)
+
+[播放或下载 75 秒产品视频（1080p，30 fps）](docs/media/cineai-studio-product-film.mp4)
+
+### 项目总览
+
+![项目总览：项目卡片、创作状态与搜索筛选](docs/media/projects-dashboard.png)
+
+### 分镜工作台
+
+![分镜工作台：镜头卡片、剧本大纲和分镜详情面板](docs/media/storyboard-workspace.png)
+
+### 3D 导演台
+
+![3D 导演台：灰盒场景、角色走位、相机预览与时间轴](docs/media/3d-director-workspace.png)
+
 ## 启动
 
 使用 Node.js 20.9 以上版本。推荐当前受支持的 Node.js LTS。
