@@ -1,0 +1,9 @@
+{"project": "给夜晚留一盏灯", "confirmations": {"plan": true, "cast": true, "locations": true, "shots": true, "export": true}, "confirmedStageCount": 5, "shotsConfirmed": true, "locationName": "临河修灯小工坊", "stageRemoved": true, "visualAuditRemoved": true, "maxImageReferences": 4}
+/: HTTP 200
+/studio: HTTP 200
+/export: HTTP 200
+/queue: HTTP 200
+/new: HTTP 200
+/director: HTTP 200
+/characters: HTTP 200
+health: {"status":"ok","checks":{"database":"ok","redis":"ok","ffmpeg":"ok","local_media":"ok"}}

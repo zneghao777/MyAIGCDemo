@@ -1,0 +1,13 @@
+
+> cineai-studio@0.1.0 test:web
+> vitest run
+
+
+ RUN  v5.0.3 /Users/zenghao/MyAIGCDemo
+
+
+ Test Files  8 passed (8)
+      Tests  40 passed (40)
+   Start at  01:29:23
+   Duration  246ms (transform 51%, import 38%, tests 9%, worker 2%)
+

@@ -1,0 +1,6 @@
+import { afterEach, expect, it, vi } from "vitest";
+import { api, ApiError } from "./api";
+afterEach(() => vi.unstubAllGlobals());
+it("B1: a rejected fetch becomes NETWORK_ERROR", async () => { vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("Failed to fetch"))); await expect(api("/projects/network-test")).rejects.toMatchObject({ name: "ApiError", status: 0, code: "NETWORK_ERROR" }); });
+it("aborted reads remain cancellation", async () => { const controller=new AbortController(); controller.abort(); vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("Failed to fetch"))); await expect(api("/projects/abort-test", "GET", undefined, controller.signal)).rejects.toMatchObject({ name: "AbortError" }); });
+it("rate limits retain Retry-After and suppress immediate duplicate reads", async () => { const fetch=vi.fn().mockResolvedValue(new Response(JSON.stringify({ error: { code: "RATE_LIMITED", message: "wait" } }), { status: 429, headers: { "Retry-After": "2" } })); vi.stubGlobal("fetch",fetch); await expect(api("/projects/rate-test")).rejects.toMatchObject({ status:429, retryAfterMs:2000 }); await expect(api("/projects/rate-test")).rejects.toBeInstanceOf(ApiError); expect(fetch).toHaveBeenCalledOnce(); });

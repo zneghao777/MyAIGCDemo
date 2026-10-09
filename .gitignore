@@ -1,0 +1,28 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.DS_Store
+.playwright-cli/
+output/
+
+# 环境变量：仅保留 .env.example，真实密钥不得入库
+.env
+.env.local
+.env.*.local
+
+# Python backend runtime
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+backend/.runtime/
+backend/*.db
+*.egg-info/
+backend/build/
+backend/dist/
+.runtime/
+data/media/
+/.playwright-mcp/
+/cineai-studio-75s.mp4

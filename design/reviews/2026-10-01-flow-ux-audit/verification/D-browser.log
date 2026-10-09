@@ -1,0 +1,55 @@
+### Result
+{"home":"empty project placeholder; no empty src warnings; no fake titles","exportHeight":1743,"coverDownload":"btn + icon","capabilities":{"intro":false,"watermark":false,"bgmPresets":false},"readyStatus":"helper","audio":"unknown duration loaded only after audition","narrowScreen":"420px visible and dismissible","bgmUpload":"retained"}
+### Ran Playwright code
+```js
+await (async(page)=>{
+ const dir='design/reviews/2026-10-01-flow-ux-audit/shots/after/';
+ await page.setViewportSize({width:1440,height:1000});
+ const warnings=[];page.on('console',msg=>{if(/empty string/.test(msg.text()))warnings.push(msg.text());});
+ await page.goto('http://127.0.0.1:3000/');
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption('abc5fd53bf594d0f89692771b2b9d22f');
+ const placeholder=page.locator('.project-card').filter({hasText:'大运撞上我'}).locator('.project-cover-placeholder');
+ await placeholder.waitFor();
+ if(await page.locator('img[src=""]').count())throw new Error('empty cover src');
+ if(/THE LAST DELIVERY|UNTIL WE MEET AGAIN|TALES OF SONG DYNASTY|NEON CITY 2077|A NEW CHAPTER/.test(await page.locator('body').innerText()))throw new Error('fake title');
+ await page.screenshot({path:dir+'01-home-after.png',fullPage:true});
+ await page.goto('http://127.0.0.1:3000/export');
+ await page.getByRole('heading',{name:'全片带声预览',exact:true}).waitFor();
+ await page.getByRole('link',{name:'下载封面',exact:true}).waitFor();
+ await page.waitForFunction(()=>document.querySelectorAll('.settings-switches .switch-row').length===2);
+ if(await page.getByRole('switch',{name:/片头|水印/}).count())throw new Error('dead switches');
+ await page.screenshot({path:dir+'08b-export-full-after.png',fullPage:true});
+ const height=await page.evaluate(()=>document.documentElement.scrollHeight);if(height>1800)throw new Error('export height '+height);
+ const download=page.getByRole('link',{name:'下载封面',exact:true});if(await download.count()&&!(await download.getAttribute('class'))?.includes('btn'))throw new Error('cover link');
+ await page.getByRole('switch',{name:/背景音乐/}).check();
+ if(await page.getByRole('button',{name:'悬疑',exact:true}).count())throw new Error('dead preset');
+ if(!await page.getByText('上传背景音乐（最多20MB；只重新混音）').isVisible())throw new Error('upload removed');
+ await page.goto('http://127.0.0.1:3000/studio');
+ await page.getByRole('button',{name:/04 分镜创作/}).click();
+ await page.locator('.cs-shot-card').first().click();
+ const status=page.locator('.cs-detail > p').first();if((await status.getAttribute('class'))!=='helper')throw new Error('ready warning');
+ await page.screenshot({path:dir+'05-studio-storyboard-after.png'});
+ // Reproduce an unknown-duration voice in read responses only; real current voices may have measured duration.
+ await page.route('**/api/projects',async route=>{const r=await route.fetch();const d=await r.json();for(const p of d)for(const c of p.characters||[])if(c.creative?.voice?.reference)c.creative.voice.reference.duration_ms=0;await route.fulfill({response:r,json:d});});
+ await page.route('**/api/creative/projects/*',async route=>{const r=await route.fetch();const d=await r.json();for(const c of d.project.characters||[])if(c.creative?.voice?.reference)c.creative.voice.reference.duration_ms=0;await route.fulfill({response:r,json:d});});
+ await page.reload();
+ await page.getByRole('button',{name:/02 角色形象与声音/}).click();
+ await page.locator('.cs-character-card').first().click();
+ if(await page.locator('.cw-current-audio audio').count())throw new Error('unknown duration autoplay');
+ await page.locator('.cw-current-audio').getByRole('button',{name:'试听',exact:true}).click();
+ await page.locator('.cw-current-audio audio').waitFor();
+ await page.screenshot({path:dir+'25-character-editor-after.png'});
+ await page.setViewportSize({width:420,height:1000});
+ await page.getByText('当前屏幕较窄，分镜编辑建议在桌面端进行').waitFor({state:'visible'});
+ await page.screenshot({path:dir+'12-mobile-studio-after.png',fullPage:true});
+ await page.getByRole('button',{name:'继续使用',exact:true}).click();
+ if(await page.locator('.cw-narrow-notice').count())throw new Error('notice dismissal');
+ await page.unrouteAll();
+ await page.setViewportSize({width:1440,height:1000});
+ if(warnings.length)throw new Error(warnings.join(','));
+ const caps=await (await page.request.get('http://127.0.0.1:8001/api/creative/projects/abc5fd53bf594d0f89692771b2b9d22f')).json();
+ return {home:'empty project placeholder; no empty src warnings; no fake titles',exportHeight:height,coverDownload:'btn + icon',capabilities:{intro:caps.capabilities.intro,watermark:caps.capabilities.watermark,bgmPresets:caps.capabilities.bgmPresets},readyStatus:'helper',audio:'unknown duration loaded only after audition',narrowScreen:'420px visible and dismissible',bgmUpload:'retained'};
+})(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-01T16-03-59-493Z.log#L468-L503

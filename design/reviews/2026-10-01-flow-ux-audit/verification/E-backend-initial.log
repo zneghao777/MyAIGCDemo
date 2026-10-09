@@ -1,0 +1,64 @@
+...FF..                                                                  [100%]
+=================================== FAILURES ===================================
+______ test_name_edit_preserves_confirmation_and_visual_edit_invalidates _______
+
+client = <httpx.AsyncClient object at 0x10c3d42f0>
+
+    async def test_name_edit_preserves_confirmation_and_visual_edit_invalidates(client):
+        async with Session() as db:
+            p = Project(name="环境测试", creative={"version": 1, "shots_confirmed": True, "plan": {"locations": [{"id": "station", "name": "车站", "description": "车站"}]}})
+            db.add(p)
+            await db.flush()
+            loc = {"version": 1, "confirmed": True, "location": {"id": "station", "name": "车站", "description": "车站", "landmarks": "站牌", "lighting": "夜晚", "palette": "暖色", "spatial_layout": "站牌在右侧", "states": {}}, "image": {"key": "environment", "asset_id": "image"}}
+            loc["image"]["fingerprint"] = flow.location_fingerprint(loc, p.style)
+            loc["revision"] = await flow.revision(db, p.id, "station", "location", loc)
+            p.creative = {**p.creative, "locations": {"station": loc}}
+            sc = Scene(project_id=p.id, order_index=0, creative={"version": 1, "shot": {"cast": {}, "lines": [], "location_id": "station", "location_revision": loc["revision"]}})
+            db.add(sc)
+            await db.commit()
+            pid, sid, original_review = p.id, sc.id, flow.review_fingerprint(sc)
+        response = await client.patch(f"/api/creative/projects/{pid}/locations/station", json={"expected": 1, "data": {**loc["location"], "name": "新车站"}})
+>       assert response.status_code == 200, response.text
+E       AssertionError: {"error":{"code":"VALIDATION_ERROR","message":"请求字段不合法","details":{"fields":[{"loc":["spatial_layout"],"type":"extra_forbidden","message":"Extra inputs are not permitted"}]}}}
+E       assert 422 == 200
+E        +  where 422 = <Response [422 Unprocessable Entity]>.status_code
+
+backend/tests/test_quality_remediation.py:30: AssertionError
+_____________ test_two_characters_plus_environment_fit_budget_four _____________
+
+client = <httpx.AsyncClient object at 0x10c51fbf0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c39ce00>
+
+    async def test_two_characters_plus_environment_fit_budget_four(client, monkeypatch):
+        monkeypatch.setattr(get_settings(), "image_max_references", 4)
+        p = await setup(client, monkeypatch)
+        pid, sid = p["id"], p["scenes"][0]["id"]
+        task = await generate(client, pid, "location_image", target="station")
+>       await select(client, pid, task)
+
+backend/tests/test_quality_remediation.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <httpx.AsyncClient object at 0x10c51fbf0>
+id = '632e87ee8b6546a4b6f8f9afd21887c6'
+task = {'id': '36b4774e634346ff8d8a635a2bac4180', 'projectId': '632e87ee8b6546a4b6f8f9afd21887c6', 'sceneId': None, 'kind': 'image', ...}
+
+    async def select(client, id, task):
+        f = await fetch(client, id)
+        candidate = next(x for x in f["candidates"] if x["id"] == task["result"]["candidateId"])
+        p = f["project"]
+        target = next((x for x in p["characters"] + p["scenes"] if x["id"] == candidate["entityId"]), p)
+        r = await client.post(
+            f"/api/creative/projects/{id}/select",
+            json={"candidate_id": candidate["id"], "expected": target["creative"]["version"]},
+        )
+>       assert r.status_code == 200, r.text
+E       AssertionError: {"error":{"code":"STALE_VERSION","message":"内容已更新，请刷新后再保存；旧版本已保留","details":{}}}
+E       assert 409 == 200
+E        +  where 409 = <Response [409 Conflict]>.status_code
+
+backend/tests/test_creative.py:125: AssertionError
+=========================== short test summary info ============================
+FAILED backend/tests/test_quality_remediation.py::test_name_edit_preserves_confirmation_and_visual_edit_invalidates
+FAILED backend/tests/test_quality_remediation.py::test_two_characters_plus_environment_fit_budget_four
+2 failed, 5 passed in 3.14s

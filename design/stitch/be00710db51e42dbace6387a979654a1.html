@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-surface": "#e2e2ec",
+        "surface-container-highest": "#33343c",
+        "on-secondary": "#2c0e94",
+        "on-error": "#690005",
+        "on-error-container": "#ffdad6",
+        "primary-fixed": "#ffdea8",
+        "inverse-surface": "#e2e2ec",
+        "on-secondary-container": "#b5abff",
+        "on-primary": "#422d00",
+        "on-background": "#e2e2ec",
+        "tertiary-fixed-dim": "#7bd0ff",
+        "surface-dim": "#11131a",
+        "surface-container": "#1d1f27",
+        "tertiary-fixed": "#c4e7ff",
+        "secondary": "#c7bfff",
+        "error": "#ffb4ab",
+        "background": "#11131a",
+        "surface-tint": "#f9bc45",
+        "secondary-container": "#4330aa",
+        "on-tertiary-container": "#005676",
+        "surface-bright": "#373941",
+        "tertiary": "#bbe4ff",
+        "on-secondary-fixed": "#180065",
+        "on-primary-container": "#6a4a00",
+        "on-tertiary-fixed": "#001e2c",
+        "on-secondary-fixed-variant": "#4330aa",
+        "on-primary-fixed-variant": "#5e4200",
+        "primary-container": "#f5b942",
+        "inverse-primary": "#7c5800",
+        "surface-variant": "#33343c",
+        "on-tertiary": "#00354a",
+        "outline-variant": "#504535",
+        "secondary-fixed": "#e5deff",
+        "primary": "#ffda9c",
+        "surface-container-low": "#191b22",
+        "on-surface-variant": "#d4c4af",
+        "error-container": "#93000a",
+        "primary-fixed-dim": "#f9bc45",
+        "on-primary-fixed": "#271900",
+        "surface-container-lowest": "#0c0e15",
+        "secondary-fixed-dim": "#c7bfff",
+        "surface": "#11131a",
+        "outline": "#9c8f7b",
+        "on-tertiary-fixed-variant": "#004c69",
+        "surface-container-high": "#282a31",
+        "tertiary-container": "#70cdff",
+        "inverse-on-surface": "#2e3038"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-xl": "2rem",
+        "space-lg": "1.25rem",
+        "space-md": "0.75rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "margin": "1.25rem",
+        "space-xs": "0.25rem"
+      },
+      "fontFamily": {
+        "timecode": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-lg": ["Inter"],
+        "headline-xl": ["Inter"],
+        "label-md": ["Inter"],
+        "body-md": ["Inter"],
+        "headline-md": ["Inter"],
+        "body-sm": ["Inter"]
+      },
+      "fontSize": {
+        "timecode": ["0.8125rem", {"lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "500"}],
+        "label-sm": ["0.625rem", {"lineHeight": "0.875rem", "letterSpacing": "0.08em", "fontWeight": "700"}],
+        "body-lg": ["1rem", {"lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-lg": ["1.75rem", {"lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "headline-xl": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "700"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.06em", "fontWeight": "600"}],
+        "body-md": ["0.875rem", {"lineHeight": "1.375rem", "letterSpacing": "0em", "fontWeight": "400"}],
+        "headline-md": ["1.25rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "body-sm": ["0.75rem", {"lineHeight": "1.125rem", "letterSpacing": "0.01em", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 h-14 bg-[#0E0F13]/85 backdrop-blur-xl border-b border-[#2A2D3A]"><div class="h-14 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex items-center gap-space-sm"><img alt="CineAI Studio Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Xp0vklSa6Qd-ZrJwIXJ6gk_T6PiJAm6nxatCcdXRqt4WBHQ1wTSeeYOI8QllS8PvvcQ2Jzan45Yked5OsoMAT96KDuxBfCesBRb8_MyohkOdJddSqxAwdIj7d5XXiToSeCH-_1g9p_QznccAjQu2dNkdv_JQCubJDomRl8_1G8TLaHEWTtn6NFI_e8kH9f6mbwmChFUnEf7s0b5W-_W9V8oBVht37PNPK7Gyq8uokq"/><span class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold hidden sm:inline">CineAI Studio</span></div><span class="text-outline-variant">/</span><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-[#2A2D3A]"><span class="material-symbols-outlined text-[16px] text-primary-container">movie</span><span class="font-label-md text-label-md text-on-surface max-w-[180px] lg:max-w-[260px] truncate">《逆袭从首富开始》S01E03 • 爆款短剧</span><span class="material-symbols-outlined text-[14px] text-on-surface-variant cursor-pointer hover:text-on-surface">expand_more</span></div></div><nav class="hidden xl:flex items-center gap-space-xs h-full" data-active-classes="bg-surface-container-high text-primary font-semibold border-b-2 border-primary-container"><a aria-current="page" class="h-full flex items-center px-space-md transition-colors bg-surface-container-high text-primary font-semibold border-b-2 border-primary-container" data-path="projects" href="#">项目工作台</a><a class="h-full flex items-center px-space-md font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="storyboard" href="#">剧本分镜</a><a class="h-full flex items-center px-space-md font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="director-stage" href="#">3D 导演台</a><a class="h-full flex items-center px-space-md font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="render-export" href="#">渲染与导出</a></nav><div class="flex items-center gap-space-md shrink-0"><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-[#2A2D3A]"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span class="font-label-sm text-label-sm text-tertiary">RTX 4090 Cloud</span><span class="text-outline-variant font-label-sm">•</span><span class="font-label-sm text-label-sm text-on-surface-variant">98% 算力充足</span></div><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-all shadow-[0_0_16px_rgba(245,185,66,0.25)]"><span class="material-symbols-outlined text-[16px]">add</span><span class="hidden sm:inline">新建项目</span></button><button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-[#2A2D3A]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB48ZyeDbxFH1O-JvwASPHCNbg_MamnSCHDxlfqo_3FisCkfvK53775lFSEh9xIEKf8LYHDxsUXz4FhZe5N1eTME_4DByFB_ihTuE5deERQOgqe65GgH-yxwHhRTKpAkpuLsZwZCJVJKxRW1SS6tP8IH3l_PGjt-qFcJTXgiqaX-L0u984HywLHxYE6eL1c7MeWbc3fxrcCqvc_kP1DLPDt7xXSV6r021ViHiBo8AM"/></div></div></div></header><aside class="fixed left-0 top-14 bottom-0 w-60 bg-[#0E0F13] border-r border-[#2A2D3A] z-40 flex flex-col py-space-md"><div class="px-space-md pb-space-sm"><div class="flex items-center justify-between px-space-sm py-1 text-on-surface-variant"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">戏剧流程</span><span class="font-timecode text-timecode text-tertiary">24 FPS</span></div></div><nav class="flex-1 px-space-sm space-y-1" data-active-classes="bg-surface-container-high text-primary font-semibold"><a aria-current="page" class="flex items-center justify-between px-space-md py-2 rounded-lg transition-all bg-surface-container-high text-primary font-semibold" data-path="projects" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">space_dashboard</span><span>项目工作台</span></span><span class="font-label-sm text-label-sm text-outline">W1</span></a><a class="flex items-center justify-between px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="storyboard" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">auto_stories</span><span>剧本分镜</span></span><span class="font-label-sm text-label-sm text-secondary">AI ✨</span></a><a class="flex items-center justify-between px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="director-stage" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">videocam</span><span>3D 导演台</span></span><span class="font-label-sm text-label-sm text-tertiary">LIVE</span></a><a class="flex items-center justify-between px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="render-export" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">movie_creation</span><span>渲染与导出</span></span><span class="font-label-sm text-label-sm text-primary-container">GPU</span></a><div class="pt-space-md px-space-sm"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">资产库与监控</span></div><a class="flex items-center justify-between px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="asset-vault" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">folder_special</span><span>短剧剧集资产</span></span><span class="font-label-sm text-label-sm text-outline">128GB</span></a><a class="flex items-center justify-between px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all" data-path="gpu-cluster" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">memory</span><span>云端算力调度</span></span><span class="font-label-sm text-label-sm text-emerald-400">在线</span></a></nav><div class="px-space-md pt-space-sm border-t border-[#2A2D3A]"><div class="p-space-sm rounded-lg bg-surface-container-low border border-[#2A2D3A] flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant">当前集时长</span><span class="font-timecode text-timecode text-primary font-bold">00:01:45:18</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-variant text-tertiary font-bold">9:16</span></div></div></aside><div class="pl-60"><main class="relative pt-14 w-full min-h-screen bg-[#0E0F13]"><div class="flex flex-col w-full">
+<!-- Top Hero & AI Launcher Section -->
+<section class="relative px-space-lg lg:px-space-xl pt-space-xl pb-space-lg overflow-hidden">
+<!-- Ambient Radial Lighting (Amber/Purple Fusion) -->
+<div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-secondary-container/20 via-primary-container/15 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-12 right-1/4 w-72 h-72 bg-tertiary-container/10 rounded-full blur-2xl pointer-events-none -z-10"></div>
+<div class="max-w-6xl mx-auto flex flex-col items-center text-center">
+<!-- Telemetry Subheading Badge -->
+<div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm uppercase tracking-widest shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+<span>AIGC 短剧工业化创作引擎 • 4K HDR 神经渲染管线</span>
+</div>
+<!-- Main Catchphrase -->
+<h1 class="mt-space-md font-headline-xl text-headline-xl text-on-surface font-extrabold tracking-tight max-w-3xl">
+        从一句灵感瞬间，到整季爆款短剧
+      </h1>
+<p class="mt-space-xs font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+        深度整合影视分镜语法、角色面部一致性锁模与多机位3D调度，赋能千万级短剧工业生产。
+      </p>
+<!-- AI Prompt Launcher Box -->
+<div class="w-full mt-space-lg p-space-sm rounded-xl bg-surface-container-high shadow-xl relative group">
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col md:flex-row items-stretch md:items-center gap-space-sm">
+<div class="flex items-center pl-space-sm text-primary shrink-0">
+<span class="material-symbols-outlined text-[24px]">psychology</span>
+</div>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none px-space-xs py-2" id="promptInput" placeholder="输入一句话创意、小说片段或短剧梗概，AI 一键生成完整分镜与人物设定... ✨ (例如：都市战神归来发现首富女儿是救命恩人)" type="text"/>
+<button class="shrink-0 flex items-center justify-center gap-space-xs px-space-lg py-3 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold shadow-[0_0_24px_rgba(245,185,66,0.3)] hover:brightness-110 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+<span>立即智能生成剧本分镜</span>
+</button>
+</div>
+<!-- Prompt Shortcut Chips -->
+<div class="mt-space-sm px-space-xs flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">灵感胶囊:</span>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="setPrompt('【都市逆袭】隐世神医被豪门退婚，千亿财阀大小姐带聘礼踏破门槛')">
+<span>都市逆袭</span>
+<span class="material-symbols-outlined text-[12px] text-primary">arrow_forward</span>
+</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="setPrompt('【豪门悬疑】假面舞会意外换错房卡，京圈大佬发现新娘竟是敌对财团继承人')">
+<span>豪门悬疑</span>
+<span class="material-symbols-outlined text-[12px] text-secondary">arrow_forward</span>
+</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="setPrompt('【玄幻修仙】宗门废柴觉醒神级签到系统，一剑断天光，九大女帝震颤')">
+<span>玄幻修仙</span>
+<span class="material-symbols-outlined text-[12px] text-tertiary">arrow_forward</span>
+</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="setPrompt('【甜宠爽剧】穿成反派大佬的短命白月光，靠玄学读心术每天狂刷好感度')">
+<span>甜宠爽剧</span>
+<span class="material-symbols-outlined text-[12px] text-primary">arrow_forward</span>
+</button>
+</div>
+<span class="font-timecode text-timecode text-on-surface-variant hidden xl:inline">AI 模型: CineStory-Omni-v4.2</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Stats Ribbon -->
+<section class="px-space-lg lg:px-space-xl py-space-sm">
+<div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-space-md">
+<!-- Stat 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">活跃剧目</span>
+<span class="mt-1 font-headline-lg text-headline-lg text-primary font-bold">8 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">部</span></span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">video_library</span>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">已生成镜头</span>
+<span class="mt-1 font-headline-lg text-headline-lg text-on-surface font-bold">1,420 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">个</span></span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[22px]">photo_camera_front</span>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">算力运行时长</span>
+<span class="mt-1 font-headline-lg text-headline-lg text-secondary font-bold">42.8 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">hrs</span></span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">speed</span>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">爆款指数预测</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-headline-lg text-headline-lg text-primary-container font-bold">94.2</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-primary font-bold">TOP 3%</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[22px]">trending_up</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter, View Switcher & Search Bar -->
+<section class="px-space-lg lg:px-space-xl pt-space-lg pb-space-sm">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<!-- Status Tabs -->
+<div class="flex items-center gap-space-xs p-1 rounded-lg bg-surface-container-low overflow-x-auto">
+<button class="px-space-md py-1.5 rounded-md bg-surface-container-high text-primary font-label-md text-label-md font-semibold shadow-sm shrink-0">全部项目 (8)</button>
+<button class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors shrink-0">创作中 (3)</button>
+<button class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors shrink-0">分镜细化中 (2)</button>
+<button class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors shrink-0">已完成 (3)</button>
+</div>
+<!-- Controls & Search -->
+<div class="flex items-center gap-space-sm">
+<!-- Tag Filter Pills -->
+<div class="hidden lg:flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-sm text-label-sm transition-colors">竖屏 9:16</button>
+<button class="px-space-sm py-1 rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-sm text-label-sm transition-colors">古装商战</button>
+<button class="px-space-sm py-1 rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-sm text-label-sm transition-colors">都市爽剧</button>
+</div>
+<!-- Search Input -->
+<div class="flex items-center px-space-sm py-1.5 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-outline">search</span>
+<input class="bg-transparent pl-space-xs font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none w-32 md:w-44" placeholder="按剧名 / 导演检索..." type="text"/>
+</div>
+<!-- View Switcher -->
+<div class="flex items-center p-1 rounded-lg bg-surface-container-low">
+<button class="p-1 rounded bg-surface-container-high text-primary">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button class="p-1 rounded text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Cards Grid (3 Columns) -->
+<section class="px-space-lg lg:px-space-xl py-space-md">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+<!-- Card 1: 《逆袭之绝品龙帅》- 分镜细化中 -->
+<div class="group relative rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md flex flex-col overflow-hidden">
+<!-- Poster Media Container (16:9 cinematic) -->
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A dramatic cinematic vertical drama preview frame showing an intense modern urban warrior in a tailored black suit standing atop a rainy neon-lit skyscraper, golden light reflections in puddles, high contrast, cinematic amber and obsidian shadows, photorealistic cinematic lighting 8k" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfZsvaGi1vRF2ENWCvL-06lv3EbNyYTtRWIAfgjFCrYGDwceCnwiyWVrW1YfDwewZaMO2TNdmrI-B1vXIUiwn0pDGchZLXR9eYGAAxDjIQc3xm1YqJCgftofGEMQDOh5xgYuzomV-rbY9w4dVFLwkm31fc46EeTyTT261FEhVqfHNNkivSi-JCszcUAwjYmH_4UnCv4m7shU9Ry_0sKQeEWGeecKk3EvzPVOsZ3s0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/20 to-transparent"></div>
+<!-- Top Telemetry Status -->
+<div class="absolute top-space-sm left-space-sm flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-highest/80 backdrop-blur-md text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              分镜细化中
+            </span>
+</div>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md text-tertiary font-timecode text-timecode">S01 • 80集</span>
+</div>
+<!-- Hover Action Overlay -->
+<div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-space-sm p-space-md">
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center gap-1 shadow-lg hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-[16px]">videocam</span>
+              进入导演台
+            </button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-bright transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+              分镜走查
+            </button>
+</div>
+</div>
+<!-- Card Body -->
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-space-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">《逆袭之绝品龙帅》</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              北境统帅隐姓埋名入赘三年，今日封帅大典，三千豪门直升机迎奉归位。
+            </p>
+<!-- Tags -->
+<div class="mt-space-sm flex flex-wrap gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">都市 / 战神</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">竖屏 9:16</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm">68 镜头已确认</span>
+</div>
+</div>
+<!-- Progress and Meta Footer -->
+<div class="mt-space-md pt-space-sm">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-1">
+<span class="text-on-surface-variant">分镜装配完成度</span>
+<span class="text-primary font-bold">72%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 72%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-sm text-outline font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                10分钟前编辑
+              </span>
+<span class="font-timecode text-timecode">24 FPS • 4K</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: 《顾总，夫人又上热搜了》- AI生成中 -->
+<div class="group relative rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md flex flex-col overflow-hidden">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70" data-alt="Modern ultra-luxury penthouse setting with a glamorous fashionable female lead standing by floor to ceiling glass overlooking the city at dusk, stylish modern romance aesthetic with soft violet ambient light and subtle cinematic haze" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNZYF664P_LofglwRZmLJ6qfGh4tzJGbu1U2-V80K6TWRTpmQoSouXSL5lDL2pHLuhs4Q-kNGIN35XWRoZnT1fIbGwMQOZzocRd8SDxEkURCn8PHVGgjiIUipyrMxY8LnR0dAtGoOoLMlCzklHN9MPBbMZc3C4BcSazdIwRjHZn3YkKaHFiWmmgllQuCm1pczkXfesDatTT4_eK_NPs75QSBOcrA6Tw7XemMtGZeA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<!-- Purple Shimmer Pulse Overlay -->
+<div class="absolute inset-0 bg-secondary-container/20 pointer-events-none animate-pulse"></div>
+<!-- Generating Badge -->
+<div class="absolute top-space-sm left-space-sm flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-container text-secondary font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px] animate-spin">cyclone</span>
+              ✨ AI 生成中
+            </span>
+</div>
+<!-- Circular Radial Generation Indicator -->
+<div class="absolute inset-0 flex flex-col items-center justify-center p-space-sm text-center bg-surface-container-lowest/60 backdrop-blur-xs">
+<svg class="w-12 h-12 -rotate-90" viewbox="0 0 48 48">
+<circle class="text-surface-container-highest fill-none" cx="24" cy="24" r="18" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-secondary fill-none" cx="24" cy="24" r="18" stroke="currentColor" stroke-dasharray="113.1" stroke-dashoffset="38" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<span class="mt-2 font-label-sm text-label-sm text-secondary font-semibold">正在生成第 14 场分镜画稿 (8/12)</span>
+<span class="font-timecode text-timecode text-on-surface-variant">耗时 01:24 • 算力节点 #18</span>
+</div>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-space-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">《顾总，夫人又上热搜了》</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              马甲千金伪装小白花嫁入首富家族，各路黑客神医身份曝光，闪瞎全城豪门名流。
+            </p>
+<div class="mt-space-sm flex flex-wrap gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">甜宠 / 现言</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">竖屏 9:16</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-secondary font-label-sm text-label-sm">高光打脸</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-1">
+<span class="text-secondary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+                GPU 神经渲染进行中
+              </span>
+<span class="text-secondary font-bold">66%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden relative">
+<div class="h-full bg-gradient-to-r from-secondary-container via-secondary to-primary-container rounded-full" style="width: 66%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-sm text-outline font-label-sm text-label-sm">
+<span>预计剩余 45 秒</span>
+<button class="text-secondary hover:underline font-label-sm text-label-sm">中断推理</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: 《我在大宋当掌柜》- 排队中 -->
+<div class="group relative rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md flex flex-col overflow-hidden">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A bustling Ancient Song dynasty city street market at twilight, glowing red lanterns, traditional Chinese wooden pavilion architecture with misty background, cinematic warm amber lighting, cinematic wide angle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPoq2hxpcTjbMpVtKH_olDB294zfEl6UCAnoTEK6-mTpbUlKCSh0TE2hH36frOLeezSF8BnDJiReA_mLbpslQaZ81v6aAvF_NlMvpB3GVICEbTrCSVqNInCwey47AFDGApCSsr4LeRTbi2VMMS6rAGl-2QbIyBBf8ml0A4lFJjqF_o3y0Wtp_8rl6RWAQB1jYL9LUqOli8xdVx2nXUjCZ0AsHmMsXribhDJ-db0X0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/30 to-transparent"></div>
+<!-- Status Queue Badge -->
+<div class="absolute top-space-sm left-space-sm flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-outline">hourglass_top</span>
+              排队中 (前序 1 任务)
+            </span>
+</div>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md text-tertiary font-timecode text-timecode">45 镜已规划</span>
+</div>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-space-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">《我在大宋当掌柜》</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              金融系硕士穿越汴京酒楼，利用现代资本杠杆玩转市井商战，从破产酒肆逆袭富甲天下。
+            </p>
+<div class="mt-space-sm flex flex-wrap gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">古装商战</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">竖屏 9:16</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">穿越轻喜</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-1">
+<span class="text-on-surface-variant">算力队列分配中</span>
+<span class="text-outline font-bold">预估 2 分钟后开始</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-outline-variant rounded-full" style="width: 15%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-sm text-outline font-label-sm text-label-sm">
+<span>优先级: 标准调度</span>
+<button class="text-primary hover:underline font-label-sm text-label-sm">优先插队</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: 《赛博重案组 2077》- 已完成 -->
+<div class="group relative rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md flex flex-col overflow-hidden">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Futuristic cyberpunk detective inside a high-tech flying vehicle cockpit overlooking neon skyscrapers, deep shadows, electric violet and cool blue lighting, rain streaks on windscreen, intense cinematic atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMJv8oac0b0ke2YjnXB1spqIjW-eJ9dRfNnVz-MQOT2uDBqmnjBgi-T1bLMxuuS5_Qm7Jk6HzopbyDROKAfsVgUxN5G-kxDnBbZj8AOEWB-O_kf589AyfLGUgno6Er0GPeIcluVF5tfKyGYbiPFRF1-eat4qaba11sOTebuqgqG8hRpld8ITu3JDgLRPbrn7W7IqCy_BMmfgsentbHRZOCnpuamHsrccqnLH27PDs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/30 to-transparent"></div>
+<!-- Success Badge -->
+<div class="absolute top-space-sm left-space-sm flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-emerald-950/80 text-emerald-400 font-label-sm text-label-sm font-bold flex items-center gap-1 border-0">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              已完成 • 金标就绪
+            </span>
+</div>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-primary-container text-on-primary font-label-sm text-label-sm font-bold">4K 60FPS</span>
+</div>
+<div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-space-sm p-space-md">
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center gap-1 shadow-lg hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+              全集导出
+            </button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-bright transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">share</span>
+              分发审片
+            </button>
+</div>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-space-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">《赛博重案组 2077》</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              仿生人警探追踪记忆走私网络，意外揭开掌控整座浮空城的合成人议会黑幕。
+            </p>
+<div class="mt-space-sm flex flex-wrap gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">科幻动作</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">超高清 4K</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm">杜比全景声</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-1">
+<span class="text-on-surface-variant">全流程制作完成</span>
+<span class="text-emerald-400 font-bold">100% (120/120 镜)</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-emerald-500 rounded-full" style="width: 100%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-sm text-outline font-label-sm text-label-sm">
+<span>渲染总时长: 18.4 hrs</span>
+<span class="text-primary font-timecode text-timecode">可直接宣发</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 5: 《替嫁真千金震撼全球》- 生成异常 / 需重试 -->
+<div class="group relative rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md flex flex-col overflow-hidden">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60" data-alt="An elegant heroine in an exquisite vintage lace wedding dress standing in a grand European style marble mansion ballroom, dramatic rim lighting, cinematic portrait with slight glitch aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN62y45yd6zUpknFlM80q7DavGjhPUh9mX3hBRY1PhtFHP_-dpzf3sta4PkIZCY9QWlOHaGbZKHbsaoCblJCOQaYcP8j8aYWgfUYkQm69x3U8S1-jwsU3HWTMS2mw8xJgtmgaKP4dbCGG_nLx6ZT0JLi4s5ixVjPE_cQvVyicf-MlpUjH43cSteDT8qIldytE8x5b_d8vf89WdkaYXnnWrfuehDudxhmqxwKO5Uec"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<!-- Error Alert Pill -->
+<div class="absolute top-space-sm left-space-sm flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-error-container text-error font-label-sm text-label-sm font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">error</span>
+              生成异常 • 需校准
+            </span>
+</div>
+<div class="absolute inset-0 flex flex-col items-center justify-center p-space-sm text-center">
+<div class="p-space-sm rounded-lg bg-surface-container-lowest/85 backdrop-blur-md max-w-[85%]">
+<span class="material-symbols-outlined text-error text-[24px]">warning</span>
+<p class="font-label-sm text-label-sm text-error mt-1">镜头 #04 关键角色面部一致性需校准</p>
+<button class="mt-space-sm px-space-md py-1 rounded bg-error-container text-on-error-container hover:brightness-110 font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 mx-auto transition-all">
+<span class="material-symbols-outlined text-[14px]">replay</span>
+                一键重试修复
+              </button>
+</div>
+</div>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-space-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">《替嫁真千金震撼全球》</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              替妹妹嫁给双腿残疾的冷面阎王，新婚夜他突然站起将她抵在墙角：“装够了吗？”
+            </p>
+<div class="mt-space-sm flex flex-wrap gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">真假千金</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">竖屏 9:16</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-error font-label-sm text-label-sm">一致性异常</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-1">
+<span class="text-error">生成进度受阻</span>
+<span class="text-error font-bold">54% (镜头中断)</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 54%"></div>
+</div>
+<div class="flex justify-between items-center mt-space-sm text-outline font-label-sm text-label-sm">
+<span>LoRA模型权重异常</span>
+<button class="text-primary hover:underline font-label-sm text-label-sm">查看错误日志</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 6: "新建项目" 空卡片引导 -->
+<button class="group relative rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-sm flex flex-col items-center justify-center p-space-xl min-h-[360px] text-center" onclick="document.getElementById('promptInput').focus()">
+<!-- Animated Golden Plus Container -->
+<div class="relative flex items-center justify-center mb-space-md">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 group-hover:bg-primary-container/30 transition-all flex items-center justify-center text-primary-container animate-pulse">
+<span class="material-symbols-outlined text-[36px] text-primary">add</span>
+</div>
+<div class="absolute inset-0 rounded-full bg-primary/10 blur-md pointer-events-none group-hover:scale-125 transition-transform"></div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold group-hover:text-primary transition-colors">
+          创建全新短剧项目
+        </h3>
+<p class="mt-space-xs font-body-sm text-body-sm text-on-surface-variant max-w-[220px]">
+          导入剧本文本、网文链接或从头开始 AI 构想分镜
+        </p>
+<div class="mt-space-lg flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container-high group-hover:bg-primary-container group-hover:text-on-primary text-on-surface font-label-md text-label-md transition-all">
+<span class="material-symbols-outlined text-[16px]">folder_open</span>
+<span>空白剧本项目</span>
+</div>
+</button>
+</div>
+</section>
+<!-- Bottom Workspace Status Footer -->
+<footer class="mt-space-xl px-space-lg lg:px-space-xl py-space-md bg-surface-container-lowest">
+<div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1 text-emerald-400">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          AIGC 算力集群在线 (84台 H100 协同中)
+        </span>
+<span class="text-outline">/</span>
+<span>平均出图时效: 1.8s/帧</span>
+</div>
+<div class="flex items-center gap-space-md">
+<a class="hover:text-on-surface transition-colors" href="#">分镜操作手册</a>
+<a class="hover:text-on-surface transition-colors" href="#">短剧提示词工坊</a>
+<a class="hover:text-on-surface transition-colors" href="#">API 导出对接</a>
+</div>
+</div>
+</footer>
+<script>
+    function setPrompt(text) {
+      const input = document.getElementById('promptInput');
+      if (input) {
+        input.value = text;
+        input.focus();
+      }
+    }
+  </script>
+</div></main></div></body></html>

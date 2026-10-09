@@ -1,0 +1,24 @@
+### Result
+{"backend":"connection refused","frontend":200,"ChineseNetworkMessage":true,"recoverySuggestion":true,"refreshButton":1,"rawFailedToFetchVisible":false}
+### Ran Playwright code
+```js
+await (async(page)=>{
+ await page.unrouteAll(); await page.setViewportSize({width:1440,height:1000});
+ await page.getByRole('button',{name:'生成缺失画面与配音 · 先估算'}).click();
+ await page.getByRole('alert').filter({hasText:'网络连接失败'}).waitFor();
+ const visible=await page.locator('body').innerText();
+ if(visible.includes('Failed to fetch')||!visible.includes('恢复连接后刷新页面'))throw new Error('raw error or missing recovery');
+ const frontend=await page.request.get('http://127.0.0.1:3000/studio');
+ let backend;try{await page.request.get('http://127.0.0.1:8001/api/health',{timeout:1500});backend='reachable';}catch{backend='connection refused';}
+ if(backend==='reachable')throw new Error('backend was not disconnected');
+ await page.screenshot({path:'design/reviews/2026-10-01-flow-ux-audit/shots/after/34-issues-storyboard-after.png'});
+ return {backend,frontend:frontend.status(),ChineseNetworkMessage:true,recoverySuggestion:true,refreshButton:await page.getByRole('button',{name:'刷新页面',exact:true}).count(),rawFailedToFetchVisible:false};
+}
+)(page);
+```
+### Page
+- Page URL: http://127.0.0.1:3000/studio
+- Page Title: CineAI Studio · AI 短剧创作工作台
+- Console: 2 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-10-01T16-03-59-493Z.log#L558-L559

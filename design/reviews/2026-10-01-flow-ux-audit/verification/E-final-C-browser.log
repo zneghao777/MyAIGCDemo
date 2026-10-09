@@ -1,0 +1,35 @@
+### Result
+{"tasks":36,"uniqueTitles":true,"groups":"2 primary + 3 folded actions","readinessRows":3,"unpriced":"calls hidden; unchecked confirm disabled; no pending target remains disabled","singleTarget":[{"id":"35280352a81f407baa2ab53a69efcf43","title":"01 · 再试一次","operation":"shot_audio","kind":"tts","orderIndex":1}]}
+### Ran Playwright code
+```js
+await (async(page)=>{
+ const dir='design/reviews/2026-10-01-flow-ux-audit/shots/after/';
+ await page.goto('http://127.0.0.1:3000/studio');
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption('abc5fd53bf594d0f89692771b2b9d22f');
+ await page.getByRole('button',{name:'生成任务',exact:true}).click();
+ const titles=await page.locator('.cw-all-tasks .cw-task-title').allTextContents();
+ if(new Set(titles).size!==titles.length||titles.length<10)throw new Error('task uniqueness');
+ if(!titles.some(t=>t.includes('镜头 01')))throw new Error('task shot binding');
+ await page.screenshot({path:dir+'24-all-tasks-after.png',fullPage:true});
+ await page.getByRole('button',{name:/04 分镜创作/}).click();
+ await page.locator('.cs-shot-card').first().click();
+ if(await page.locator('.cw-generation-groups > section > button.primary').count()!==2)throw new Error('group primary count');
+ if(await page.locator('.cw-generation-groups details button').count()!==3)throw new Error('secondary count');
+ await page.screenshot({path:dir+'21-storyboard-detail-after.png'});
+ await page.getByRole('button',{name:/05 预览与导出/}).click();
+ if(await page.locator('.cw-readiness-rows > div').count()!==3)throw new Error('three readiness rows');
+ await page.screenshot({path:dir+'06-studio-generation-after.png'});
+ await page.getByRole('button',{name:'生成缺失画面与配音 · 先估算'}).click();
+ await page.getByRole('dialog',{name:'生成范围与费用'}).waitFor();
+ const dialog=page.getByRole('dialog');
+ if((await dialog.innerText()).includes('次调用')||(await dialog.innerText()).includes('调用模型'))throw new Error('unpriced calls displayed');
+ if(await dialog.getByRole('button',{name:'开始生成候选'}).isEnabled())throw new Error('unpriced enabled');
+ await page.screenshot({path:dir+'20-estimate-modal-after.png'});
+ await page.getByRole('button',{name:'关闭弹窗'}).click();
+ const response=await page.request.post('http://127.0.0.1:8001/api/creative/projects/abc5fd53bf594d0f89692771b2b9d22f/estimate',{data:{operation:'shot_audio',target:'35280352a81f407baa2ab53a69efcf43'}});
+ const quote=await response.json();if(!quote.targets?.[0]?.title)throw new Error('estimate target missing');
+ return {tasks:titles.length,uniqueTitles:true,groups:'2 primary + 3 folded actions',readinessRows:3,unpriced:'calls hidden; unchecked confirm disabled; no pending target remains disabled',singleTarget:quote.targets};
+})(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-01T16-03-59-493Z.log#L530-L531

@@ -1,0 +1,32 @@
+### Result
+{"network":"browser connection refused -> 中文提示、恢复建议、刷新按钮; no raw Failed to fetch","videoTitle":"生成分镜视频; default view has no technical identifiers","technicalDetails":"all inspected details default folded"}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const dir='design/reviews/2026-10-01-flow-ux-audit/shots/after/';
+ await page.goto('http://127.0.0.1:3000/studio');
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption('abc5fd53bf594d0f89692771b2b9d22f');
+ await page.getByRole('button',{name:/04 分镜创作/}).click();
+ await page.getByRole('button',{name:'生成视频',exact:true}).click();
+ await page.getByRole('dialog',{name:'生成分镜视频'}).waitFor();
+ const text=await page.getByRole('dialog').innerText();
+ if(/MiniMax|mimo-v2|H3|ffmpeg|[a-f0-9]{32}/.test(text))throw new Error('technical leak in dialog');
+ await page.screenshot({path:dir+'06-studio-generation-video-after.png'});
+ await page.getByRole('button',{name:'关闭弹窗'}).click();
+ const folded=await page.locator('.cw-technical').evaluateAll(nodes=>nodes.every(node=>!node.open));
+ if(!folded)throw new Error('technical sections not folded');
+ await page.route('**/api/creative/projects/*', route=>route.abort('connectionrefused'));
+ await page.reload();
+ await page.getByRole('alert').filter({hasText:'网络连接失败'}).waitFor();
+ const body=await page.locator('body').innerText();
+ if(body.includes('Failed to fetch')||!body.includes('恢复连接后刷新页面'))throw new Error('network fallback');
+ await page.screenshot({path:dir+'34-issues-storyboard-after.png'});
+ await page.unrouteAll();await page.reload();
+ return {network:'browser connection refused -> 中文提示、恢复建议、刷新按钮; no raw Failed to fetch',videoTitle:'生成分镜视频; default view has no technical identifiers',technicalDetails:'all inspected details default folded'};
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:3000/studio
+- Page Title: CineAI Studio · AI 短剧创作工作台
+### Events
+- New console entries: .playwright-cli/console-2026-10-01T16-03-59-493Z.log#L560-L587

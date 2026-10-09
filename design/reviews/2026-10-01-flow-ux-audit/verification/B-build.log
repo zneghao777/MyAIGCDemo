@@ -1,0 +1,34 @@
+
+> cineai-studio@0.1.0 build
+> next build
+
+▲ Next.js 16.3.5 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 12ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 383ms
+  Running TypeScript ...
+  Finished TypeScript in 2.7s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/10) ...
+  Generating static pages using 11 workers (2/10) 
+  Generating static pages using 11 workers (4/10) 
+  Generating static pages using 11 workers (7/10) 
+✓ Generating static pages using 11 workers (10/10) in 218ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /characters
+├ ○ /director
+├ ○ /export
+├ ○ /icon.svg
+├ ○ /new
+├ ○ /queue
+└ ○ /studio
+
+
+○  (Static)  prerendered as static content
+

@@ -1,0 +1,51 @@
+### Result
+{"rename":{"location":"riverside_workshop","beforeVersion":4,"afterVersion":5,"shotsConfirmed":true,"exportConfirmed":true,"confirmedStages":9,"nameRestored":true},"deadFieldsAbsent":true,"maxImageReferences":4,"gold":"#f5b942","focusedClass":true}
+### Ran Playwright code
+```js
+await (async(page)=>{
+ const dir='design/reviews/2026-10-01-flow-ux-audit/shots/after/';
+ const pid='abc5fd53bf594d0f89692771b2b9d22f';
+ await page.unrouteAll();
+ await page.setViewportSize({width:1440,height:1000});
+ await page.goto('http://127.0.0.1:3000/studio');
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption(pid);
+ await page.waitForFunction(()=>document.querySelector('.cw-progress')?.textContent?.includes('5 / 5'));
+ await page.getByRole('button',{name:/03 环境素材/}).click();
+ const before=await(await page.request.get(`http://127.0.0.1:8001/api/creative/projects/${pid}`)).json();
+ const locations=before.project.creative.locations;
+ const [id,state]=Object.entries(locations)[0];
+ const original=state.location.name;
+ const input=page.getByRole('textbox',{name:'地点名称',exact:true}).first();
+ await input.fill(original+'（名称校验）');
+ await page.getByRole('button',{name:'保存场景设定',exact:true}).first().click();
+ await page.waitForFunction(()=>document.querySelector('.cw-header > div > p')?.textContent?.includes('服务端已保存'));
+ await page.getByRole('button',{name:'保存场景设定',exact:true}).first().waitFor({state:'visible'});
+ await page.waitForFunction(()=>{const button=Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='保存场景设定');return button?.disabled});
+ const after=await(await page.request.get(`http://127.0.0.1:8001/api/creative/projects/${pid}`)).json();
+ if(!after.project.creative.shots_confirmed||!after.workflowReadiness.export)throw new Error('rename invalidated confirmations');
+ if(after.project.creative.locations[id].location.name!==original+'（名称校验）')throw new Error('rename was not saved');
+ await page.screenshot({path:dir+'04-studio-locations-rename-after.png',fullPage:true});
+ await input.fill(original);
+ await page.getByRole('button',{name:'保存场景设定',exact:true}).first().click();
+ await page.waitForFunction(()=>{const button=Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='保存场景设定');return button?.disabled});
+ const restored=await(await page.request.get(`http://127.0.0.1:8001/api/creative/projects/${pid}`)).json();
+ if(restored.project.creative.locations[id].location.name!==original)throw new Error('original name not restored');
+ if(!restored.project.creative.shots_confirmed)throw new Error('restore invalidated');
+ if('stage' in restored.project.creative||'visualAudit' in restored.capabilities)throw new Error('dead response keys');
+ if(restored.capabilities.maxImageReferences!==4)throw new Error('reference budget');
+ await page.getByRole('button',{name:/02 角色形象与声音/}).click();
+ await page.locator('.cs-character-card').first().click();
+ if(!await page.locator('.cw-cast--focused').count())throw new Error('focused state class');
+ const gold=await page.locator('.creative-workbench').evaluate(node=>getComputedStyle(node).getPropertyValue('--cw-gold').trim());
+ const base=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+ if(gold!==base)throw new Error('gold tokens differ');
+ await page.screenshot({path:dir+'25-character-editor-after.png'});
+ return {rename:{location:id,beforeVersion:state.version,afterVersion:after.project.creative.locations[id].version,shotsConfirmed:after.project.creative.shots_confirmed,exportConfirmed:after.workflowReadiness.export,confirmedStages:Object.values(after.workflowReadiness).filter(v=>v===true).length,nameRestored:true},deadFieldsAbsent:true,maxImageReferences:4,gold,focusedClass:true};
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:3000/studio
+- Page Title: CineAI Studio · AI 短剧创作工作台
+- Console: 1 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-10-01T16-03-59-493Z.log#L523-L525

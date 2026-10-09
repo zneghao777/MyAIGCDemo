@@ -1,0 +1,51 @@
+### Result
+{"stageLabels":["01 故事方案","02 角色形象与声音","03 环境素材","04 分镜创作","05 预览与导出"],"dormitory":"3 / 5 live, locations exit enabled, dirty save modal passed","complete":"5 / 5 live; export 已就绪","empty":"browser-only recorded state; CTA opens live estimate; no generation submitted"}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const assert = (value, message) => { if (!value) throw new Error(message); };
+ const dir = 'design/reviews/2026-10-01-flow-ux-audit/shots/after/';
+ await page.setViewportSize({width:1440,height:1000});
+ await page.reload();
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption('ca8f11c6f8ca472e9512861e5e17a272');
+ await page.getByRole('heading',{name:'宿舍八卦风暴',exact:true}).waitFor();
+ await page.waitForFunction(() => document.querySelector('.cw-progress')?.textContent?.includes('3 / 5'));
+ const labels = await page.locator('.creative-steps button > span').allTextContents();
+ assert(labels.join('|') === '01 故事方案|02 角色形象与声音|03 环境素材|04 分镜创作|05 预览与导出', 'stage labels');
+ assert(await page.locator('.creative-steps small').filter({hasText:'已确认'}).count() === 3, 'confirmed count');
+ await page.screenshot({path:dir+'02-studio-plan-after.png'});
+ await page.getByRole('button',{name:'03 环境素材 已确认',exact:true}).click();
+ assert(await page.getByRole('button',{name:'确认环境，进入分镜 →'}).isEnabled(), 'location exit enabled');
+ await page.screenshot({path:dir+'04-studio-locations-after.png',fullPage:true});
+ await page.getByRole('textbox',{name:'地点名称',exact:true}).fill('女生宿舍（验收未保存）');
+ assert(await page.getByRole('button',{name:'生成无人环境候选 · 先估算'}).isEnabled(),'dirty generation enabled');
+ await page.getByRole('button',{name:'生成无人环境候选 · 先估算'}).click();
+ await page.getByRole('dialog',{name:'环境设定尚未保存。是否保存后继续？'}).waitFor();
+ await page.screenshot({path:dir+'04-studio-locations-save-after.png'});
+ await page.getByRole('button',{name:'取消',exact:true}).click();
+ await page.evaluate(() => sessionStorage.clear());
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption('abc5fd53bf594d0f89692771b2b9d22f');
+ await page.waitForFunction(() => document.querySelector('.cw-progress')?.textContent?.includes('5 / 5'));
+ assert(await page.getByRole('button',{name:'05 预览与导出 已就绪',exact:true}).isVisible(),'export ready');
+ await page.screenshot({path:dir+'02-studio-plan-complete-after.png'});
+ // The real dormitory now contains three shots. Recreate its recorded empty state only in this browser.
+ await page.route('**/api/projects',async route=>{const r=await route.fetch();const d=await r.json();for(const p of d)if(p.id==='ca8f11c6f8ca472e9512861e5e17a272')p.scenes=[];await route.fulfill({response:r,json:d});});
+ await page.route('**/api/creative/projects/ca8f11c6f8ca472e9512861e5e17a272',async route=>{const r=await route.fetch();const d=await r.json();d.project.scenes=[];d.scenes=[];d.workflowReadiness.structure_ready=false;d.stageStates.storyboard='未开始';await route.fulfill({response:r,json:d});});
+ await page.reload();
+ await page.getByRole('combobox',{name:'切换项目'}).selectOption('ca8f11c6f8ca472e9512861e5e17a272');
+ await page.getByRole('button',{name:/04 分镜创作/}).click();
+ await page.getByRole('button',{name:'生成分镜草案',exact:true}).waitFor();
+ await page.screenshot({path:dir+'31-empty-storyboard-after.png'});
+ await page.getByRole('button',{name:'生成分镜草案',exact:true}).click();
+ await page.getByRole('dialog').waitFor();
+ await page.screenshot({path:dir+'20-estimate-modal-after.png'});
+ await page.getByRole('button',{name:'关闭弹窗'}).click();
+ await page.unrouteAll();
+ return {stageLabels:labels, dormitory:'3 / 5 live, locations exit enabled, dirty save modal passed', complete:'5 / 5 live; export 已就绪', empty:'browser-only recorded state; CTA opens live estimate; no generation submitted'};
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:3000/studio
+- Page Title: CineAI Studio · AI 短剧创作工作台
+### Events
+- New console entries: .playwright-cli/console-2026-10-01T16-03-59-493Z.log#L15-L18
